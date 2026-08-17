@@ -5,8 +5,6 @@ spring:
   application:
     name: config-server
   profiles:
-    # 'native' = read config files from local filesystem (config-repo folder)
-    # instead of a Git repository. Simple for local dev / assignment purposes.
     active: native
   cloud:
     config:

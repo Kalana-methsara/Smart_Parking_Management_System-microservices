@@ -8,8 +8,6 @@ spring:
     gateway:
       discovery:
         locator:
-          # Lets Gateway auto-create routes like /USER-SERVICE/** from Eureka
-          # registrations too, but we also define explicit, cleaner routes below.
           enabled: true
           lower-case-service-id: true
       routes:

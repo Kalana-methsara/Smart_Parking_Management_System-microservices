@@ -8,11 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestTemplateConfig {
 
-    /**
-     * @LoadBalanced lets us call other services by their Eureka application
-     * name (e.g. "http://user-service/users/5") instead of hardcoding a
-     * host:port — Spring Cloud resolves it via the service registry.
-     */
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate() {

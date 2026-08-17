@@ -8,12 +8,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
-/**
- * Notifies Notification Service after a payment is processed. This is
- * best-effort: if Notification Service is down or slow, the payment
- * transaction itself must still succeed/fail on its own merits — a
- * notification failure should never roll back or block a real transaction.
- */
 @Component
 public class NotificationServiceClient {
 

@@ -2,12 +2,6 @@ package com.spms.paymentservice.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Mirrors just the fields of UserResponse (from User Service) that the
- * receipt needs. @JsonIgnoreProperties(ignoreUnknown) lets this stay small
- * even though User Service's actual response has more fields (phone, role,
- * createdAt, etc.) — Payment Service simply doesn't care about those.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInfo {
 

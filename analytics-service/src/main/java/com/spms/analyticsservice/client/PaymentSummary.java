@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PaymentSummary {
 
     private Long id;
-    private String status; // "PENDING" / "SUCCESS" / "FAILED"
+    private String status;
 
     public Long getId() {
         return id;

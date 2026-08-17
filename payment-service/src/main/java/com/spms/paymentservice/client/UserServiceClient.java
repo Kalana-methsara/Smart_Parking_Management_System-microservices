@@ -8,12 +8,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
-/**
- * Fetches user details for receipts. Returns Optional.empty() (rather than
- * throwing) if User Service is unreachable or the user isn't found — a
- * receipt should still render with "N/A" fields instead of failing
- * entirely just because one downstream call had trouble.
- */
 @Component
 public class UserServiceClient {
 

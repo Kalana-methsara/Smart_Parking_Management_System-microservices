@@ -12,11 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Fetches the full parking space list for analytics. Returns an empty list
- * (rather than throwing) if Parking Service is unreachable, so the
- * analytics endpoint degrades gracefully instead of failing outright.
- */
+
 @Component
 public class ParkingServiceClient {
 

@@ -20,10 +20,6 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    // POST /users/{userId}/bookings
-    // Records a booking against a user's history. Until the Parking/Vehicle/
-    // Payment services exist and can call this automatically, records can be
-    // created directly here for testing and demoing the history feature.
     @PostMapping
     public ResponseEntity<BookingResponse> addBooking(@PathVariable Long userId,
                                                         @Valid @RequestBody BookingRequest request) {

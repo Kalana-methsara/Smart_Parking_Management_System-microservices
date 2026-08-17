@@ -23,7 +23,6 @@ public class BookingRequest {
 
     private BigDecimal amount;
 
-    /** Optional — defaults to ACTIVE if not supplied. */
     private BookingStatus status;
 
     public Long getVehicleId() {

@@ -20,7 +20,6 @@ public class UserRegistrationRequest {
 
     private String phone;
 
-    /** Defaults to USER if not supplied. */
     private Role role;
 
     public String getName() {

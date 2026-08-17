@@ -17,7 +17,6 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
-    // GET /analytics/usage — total bookings, most-used zone, occupancy rate
     @GetMapping("/usage")
     public ResponseEntity<UsageAnalyticsResponse> getUsageAnalytics() {
         return ResponseEntity.ok(analyticsService.getUsageAnalytics());

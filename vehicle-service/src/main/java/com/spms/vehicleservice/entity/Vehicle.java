@@ -22,8 +22,6 @@ public class Vehicle {
     @Column(nullable = false)
     private VehicleType type;
 
-    /** Owning user's ID in the User Service. Not a JPA relation since
-     *  User lives in a different microservice / database. */
     @Column(name = "user_id", nullable = false)
     private Long userId;
 

@@ -39,10 +39,6 @@ public class VehicleServiceClient {
         }
     }
 
-    /**
-     * Finds the most recently COMPLETED entry/exit log for this vehicle, so
-     * the receipt can show how long the vehicle actually stayed.
-     */
     public Optional<VehicleLogInfo> getLatestCompletedLog(Long vehicleId) {
         if (vehicleId == null) {
             return Optional.empty();

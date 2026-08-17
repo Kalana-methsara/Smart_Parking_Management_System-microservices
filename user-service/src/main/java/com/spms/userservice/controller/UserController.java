@@ -21,26 +21,22 @@ public class UserController {
         this.userService = userService;
     }
 
-    // POST /users/register
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRegistrationRequest request) {
         UserResponse response = userService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // GET /users
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // GET /users/{id}
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // PUT /users/{id}
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
                                                      @Valid @RequestBody UserUpdateRequest request) {

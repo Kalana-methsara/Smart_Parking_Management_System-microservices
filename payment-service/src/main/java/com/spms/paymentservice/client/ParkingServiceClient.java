@@ -34,13 +34,6 @@ public class ParkingServiceClient {
         }
     }
 
-    /**
-     * Day 18 integration: once a parking fee is paid successfully, release
-     * the space back to AVAILABLE — closing the loop that started with
-     * reserveSpace() in Parking Service. Best-effort: if Parking Service is
-     * unreachable or the space is already available (409), the payment
-     * result itself is unaffected.
-     */
     public void releaseSpaceAfterPayment(Long spaceId) {
         if (spaceId == null) {
             return;

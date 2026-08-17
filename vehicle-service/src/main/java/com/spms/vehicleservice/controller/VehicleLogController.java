@@ -19,7 +19,6 @@ public class VehicleLogController {
         this.vehicleLogService = vehicleLogService;
     }
 
-    // POST /vehicles/{vehicleId}/entry — simulate vehicle entering
     @PostMapping("/entry")
     public ResponseEntity<VehicleLogResponse> recordEntry(@PathVariable Long vehicleId,
                                                             @RequestBody(required = false) VehicleEntryRequest request) {
@@ -27,13 +26,11 @@ public class VehicleLogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // POST /vehicles/{vehicleId}/exit — simulate vehicle exiting; computes duration
     @PostMapping("/exit")
     public ResponseEntity<VehicleLogResponse> recordExit(@PathVariable Long vehicleId) {
         return ResponseEntity.ok(vehicleLogService.recordExit(vehicleId));
     }
 
-    // GET /vehicles/{vehicleId}/logs — full entry/exit history for a vehicle
     @GetMapping("/logs")
     public ResponseEntity<List<VehicleLogResponse>> getLogs(@PathVariable Long vehicleId) {
         return ResponseEntity.ok(vehicleLogService.getLogsForVehicle(vehicleId));

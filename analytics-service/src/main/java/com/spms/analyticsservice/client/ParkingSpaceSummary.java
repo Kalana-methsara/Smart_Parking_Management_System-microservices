@@ -7,7 +7,7 @@ public class ParkingSpaceSummary {
 
     private Long id;
     private String zone;
-    private String status; // "AVAILABLE" / "RESERVED" / "OCCUPIED"
+    private String status;
     private Double zoneOccupancyRate;
 
     public Long getId() {

@@ -5,12 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * A booking history record for a user. Until Parking/Vehicle/Payment
- * services exist and can publish events into this history, records are
- * created directly via the User Service API (useful for testing /
- * demoing "GET /users/{id}/bookings" ahead of full integration).
- */
+
 @Entity
 @Table(name = "bookings")
 public class Booking {
@@ -23,8 +18,6 @@ public class Booking {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    /** Reference IDs into other services — plain values, not JPA relations,
-     *  since Vehicle/Parking Space live in separate microservices. */
     @Column(name = "vehicle_id")
     private Long vehicleId;
 
