@@ -15,7 +15,6 @@ public class NotificationRequest {
     @NotBlank(message = "message is required")
     private String message;
 
-    /** Optional — which service triggered this, e.g. "payment-service". */
     private String sourceService;
 
     public Long getUserId() {

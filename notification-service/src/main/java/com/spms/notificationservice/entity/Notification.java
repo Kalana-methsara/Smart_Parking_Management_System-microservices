@@ -12,8 +12,6 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Recipient's ID in User Service. Not a JPA relation since User lives
-     *  in a separate microservice/database. */
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
@@ -24,7 +22,6 @@ public class Notification {
     @Column(nullable = false)
     private String message;
 
-    /** Which service triggered this notification, e.g. "payment-service". */
     @Column(name = "source_service")
     private String sourceService;
 

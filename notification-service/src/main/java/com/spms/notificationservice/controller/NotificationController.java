@@ -20,26 +20,22 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    // POST /notifications — send (log + persist) a notification
     @PostMapping
     public ResponseEntity<NotificationResponse> send(@Valid @RequestBody NotificationRequest request) {
         NotificationResponse response = notificationService.send(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // GET /notifications — full notification log, across all users
     @GetMapping
     public ResponseEntity<List<NotificationResponse>> getAllNotifications() {
         return ResponseEntity.ok(notificationService.getAllNotifications());
     }
 
-    // GET /notifications/{id}
     @GetMapping("/{id}")
     public ResponseEntity<NotificationResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(notificationService.getById(id));
     }
 
-    // GET /notifications/user/{userId} — one user's notification history
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<NotificationResponse>> getByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(notificationService.getNotificationsByUser(userId));
