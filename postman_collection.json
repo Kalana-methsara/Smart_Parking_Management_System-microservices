@@ -1,0 +1,388 @@
+{
+	"info": {
+		"name": "Smart Parking Management System (SPMS)",
+		"description": "Full API collection for SPMS — covers all 6 business services plus infrastructure health checks. Uses per-service base URL variables so requests work whether you call each service directly or through the API Gateway (just swap the {{...ServiceUrl}} variable value to http://localhost:8080/api/... ).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "eurekaUrl", "value": "http://localhost:8761" },
+		{ "key": "configServiceUrl", "value": "http://localhost:8888" },
+		{ "key": "gatewayUrl", "value": "http://localhost:8080" },
+		{ "key": "userServiceUrl", "value": "http://localhost:8081" },
+		{ "key": "vehicleServiceUrl", "value": "http://localhost:8082" },
+		{ "key": "parkingServiceUrl", "value": "http://localhost:8083" },
+		{ "key": "paymentServiceUrl", "value": "http://localhost:8084" },
+		{ "key": "analyticsServiceUrl", "value": "http://localhost:8085" },
+		{ "key": "notificationServiceUrl", "value": "http://localhost:8086" },
+		{ "key": "userId", "value": "1" },
+		{ "key": "vehicleId", "value": "1" },
+		{ "key": "spaceId", "value": "1" },
+		{ "key": "paymentId", "value": "1" },
+		{ "key": "notificationId", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "Infrastructure",
+			"item": [
+				{
+					"name": "Eureka Dashboard",
+					"request": { "method": "GET", "header": [], "url": "{{eurekaUrl}}" }
+				},
+				{
+					"name": "Config Server - Health",
+					"request": { "method": "GET", "header": [], "url": "{{configServiceUrl}}/actuator/health" }
+				},
+				{
+					"name": "API Gateway - Health",
+					"request": { "method": "GET", "header": [], "url": "{{gatewayUrl}}/actuator/health" }
+				}
+			]
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nadeesha Perera\",\n  \"email\": \"nadeesha@example.com\",\n  \"password\": \"secret123\",\n  \"phone\": \"+94771234567\",\n  \"role\": \"USER\"\n}"
+						},
+						"url": "{{userServiceUrl}}/users/register"
+					}
+				},
+				{
+					"name": "List All Users",
+					"request": { "method": "GET", "header": [], "url": "{{userServiceUrl}}/users" }
+				},
+				{
+					"name": "Get User by Id",
+					"request": { "method": "GET", "header": [], "url": "{{userServiceUrl}}/users/{{userId}}" }
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"phone\": \"+94779999999\"\n}" },
+						"url": "{{userServiceUrl}}/users/{{userId}}"
+					}
+				},
+				{
+					"name": "Add Booking History Record",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": {{vehicleId}},\n  \"parkingSpaceId\": {{spaceId}},\n  \"location\": \"Colombo City Center, Zone A\",\n  \"startTime\": \"2026-07-29T09:00:00\",\n  \"endTime\": \"2026-07-29T11:30:00\",\n  \"amount\": 350.00,\n  \"status\": \"COMPLETED\"\n}"
+						},
+						"url": "{{userServiceUrl}}/users/{{userId}}/bookings"
+					}
+				},
+				{
+					"name": "Get Booking History",
+					"request": { "method": "GET", "header": [], "url": "{{userServiceUrl}}/users/{{userId}}/bookings" }
+				}
+			]
+		},
+		{
+			"name": "Vehicle Service",
+			"item": [
+				{
+					"name": "Register Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"plateNumber\": \"WP CAB-1234\",\n  \"model\": \"Toyota Aqua\",\n  \"color\": \"White\",\n  \"type\": \"CAR\",\n  \"userId\": {{userId}}\n}"
+						},
+						"url": "{{vehicleServiceUrl}}/vehicles"
+					}
+				},
+				{
+					"name": "List All Vehicles",
+					"request": { "method": "GET", "header": [], "url": "{{vehicleServiceUrl}}/vehicles" }
+				},
+				{
+					"name": "Get Vehicle by Id",
+					"request": { "method": "GET", "header": [], "url": "{{vehicleServiceUrl}}/vehicles/{{vehicleId}}" }
+				},
+				{
+					"name": "Get Vehicles by User",
+					"request": { "method": "GET", "header": [], "url": "{{vehicleServiceUrl}}/vehicles/user/{{userId}}" }
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"color\": \"Silver\"\n}" },
+						"url": "{{vehicleServiceUrl}}/vehicles/{{vehicleId}}"
+					}
+				},
+				{
+					"name": "Record Vehicle Entry",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"parkingSpaceId\": {{spaceId}}\n}" },
+						"url": "{{vehicleServiceUrl}}/vehicles/{{vehicleId}}/entry"
+					}
+				},
+				{
+					"name": "Record Vehicle Exit",
+					"request": { "method": "POST", "header": [], "url": "{{vehicleServiceUrl}}/vehicles/{{vehicleId}}/exit" }
+				},
+				{
+					"name": "Get Vehicle Entry/Exit Logs",
+					"request": { "method": "GET", "header": [], "url": "{{vehicleServiceUrl}}/vehicles/{{vehicleId}}/logs" }
+				}
+			]
+		},
+		{
+			"name": "Parking Service",
+			"item": [
+				{
+					"name": "Create Parking Space",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"location\": \"Colombo City Center\",\n  \"zone\": \"Zone A\",\n  \"price\": 100.00,\n  \"ownerId\": {{userId}}\n}"
+						},
+						"url": "{{parkingServiceUrl}}/spaces"
+					}
+				},
+				{
+					"name": "List/Search Parking Spaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{parkingServiceUrl}}/spaces?zone=Zone A&status=AVAILABLE",
+							"host": ["{{parkingServiceUrl}}"],
+							"path": ["spaces"],
+							"query": [
+								{ "key": "location", "value": "", "disabled": true },
+								{ "key": "zone", "value": "Zone A" },
+								{ "key": "minPrice", "value": "", "disabled": true },
+								{ "key": "maxPrice", "value": "", "disabled": true },
+								{ "key": "status", "value": "AVAILABLE" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Parking Space by Id",
+					"request": { "method": "GET", "header": [], "url": "{{parkingServiceUrl}}/spaces/{{spaceId}}" }
+				},
+				{
+					"name": "Update Parking Space",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"price\": 120.00\n}" },
+						"url": "{{parkingServiceUrl}}/spaces/{{spaceId}}"
+					}
+				},
+				{
+					"name": "Reserve Parking Space",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}},\n  \"vehicleId\": {{vehicleId}}\n}" },
+						"url": "{{parkingServiceUrl}}/spaces/{{spaceId}}/reserve"
+					}
+				},
+				{
+					"name": "Release Parking Space",
+					"request": { "method": "PUT", "header": [], "url": "{{parkingServiceUrl}}/spaces/{{spaceId}}/release" }
+				},
+				{
+					"name": "Trigger Reservation Expiry Sweep (manual/test)",
+					"request": { "method": "POST", "header": [], "url": "{{parkingServiceUrl}}/spaces/expire-check" }
+				}
+			]
+		},
+		{
+			"name": "Payment Service",
+			"item": [
+				{
+					"name": "Process Payment (valid card -> SUCCESS)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"vehicleId\": {{vehicleId}},\n  \"parkingSpaceId\": {{spaceId}},\n  \"amount\": 350.00,\n  \"cardNumber\": \"4111111111111111\",\n  \"expiryMonth\": 12,\n  \"expiryYear\": 2027,\n  \"cvv\": \"123\"\n}"
+						},
+						"url": "{{paymentServiceUrl}}/payments"
+					}
+				},
+				{
+					"name": "Process Payment (expired card -> FAILED)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"amount\": 350.00,\n  \"cardNumber\": \"4111111111111111\",\n  \"expiryMonth\": 1,\n  \"expiryYear\": 2020,\n  \"cvv\": \"123\"\n}"
+						},
+						"url": "{{paymentServiceUrl}}/payments"
+					}
+				},
+				{
+					"name": "List All Payments",
+					"request": { "method": "GET", "header": [], "url": "{{paymentServiceUrl}}/payments" }
+				},
+				{
+					"name": "Get Payment by Id",
+					"request": { "method": "GET", "header": [], "url": "{{paymentServiceUrl}}/payments/{{paymentId}}" }
+				},
+				{
+					"name": "Get Payments by User",
+					"request": { "method": "GET", "header": [], "url": "{{paymentServiceUrl}}/payments/user/{{userId}}" }
+				},
+				{
+					"name": "Get Full Receipt",
+					"request": { "method": "GET", "header": [], "url": "{{paymentServiceUrl}}/payments/{{paymentId}}/receipt" }
+				}
+			]
+		},
+		{
+			"name": "Analytics Service",
+			"item": [
+				{
+					"name": "Get Usage Analytics",
+					"request": { "method": "GET", "header": [], "url": "{{analyticsServiceUrl}}/analytics/usage" }
+				}
+			]
+		},
+		{
+			"name": "Notification Service",
+			"item": [
+				{
+					"name": "Send Notification (manual/test)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"type\": \"GENERIC\",\n  \"message\": \"Test notification\",\n  \"sourceService\": \"postman\"\n}"
+						},
+						"url": "{{notificationServiceUrl}}/notifications"
+					}
+				},
+				{
+					"name": "List All Notifications",
+					"request": { "method": "GET", "header": [], "url": "{{notificationServiceUrl}}/notifications" }
+				},
+				{
+					"name": "Get Notification by Id",
+					"request": { "method": "GET", "header": [], "url": "{{notificationServiceUrl}}/notifications/{{notificationId}}" }
+				},
+				{
+					"name": "Get Notifications by User",
+					"request": { "method": "GET", "header": [], "url": "{{notificationServiceUrl}}/notifications/user/{{userId}}" }
+				}
+			]
+		},
+		{
+			"name": "End-to-End Flow (via Gateway)",
+			"description": "Same flow as the README's Day 18 walkthrough, but run entirely through the API Gateway on port 8080 instead of hitting each service directly. Run these in order, updating {{userId}}/{{vehicleId}}/{{spaceId}}/{{paymentId}} from each response as you go.",
+			"item": [
+				{
+					"name": "1. Register User",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nadeesha Perera\",\n  \"email\": \"nadeesha@example.com\",\n  \"password\": \"secret123\",\n  \"role\": \"USER\"\n}"
+						},
+						"url": "{{gatewayUrl}}/api/users/register"
+					}
+				},
+				{
+					"name": "2. Register Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"plateNumber\": \"WP CAB-1234\",\n  \"model\": \"Toyota Aqua\",\n  \"color\": \"White\",\n  \"type\": \"CAR\",\n  \"userId\": {{userId}}\n}"
+						},
+						"url": "{{gatewayUrl}}/api/vehicles"
+					}
+				},
+				{
+					"name": "3. Create Parking Space",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"location\": \"Colombo City Center\",\n  \"zone\": \"Zone A\",\n  \"price\": 100.00,\n  \"ownerId\": {{userId}}\n}"
+						},
+						"url": "{{gatewayUrl}}/api/spaces"
+					}
+				},
+				{
+					"name": "4. Reserve Space",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"userId\": {{userId}},\n  \"vehicleId\": {{vehicleId}}\n}" },
+						"url": "{{gatewayUrl}}/api/spaces/{{spaceId}}/reserve"
+					}
+				},
+				{
+					"name": "5. Vehicle Entry",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": { "mode": "raw", "raw": "{\n  \"parkingSpaceId\": {{spaceId}}\n}" },
+						"url": "{{gatewayUrl}}/api/vehicles/{{vehicleId}}/entry"
+					}
+				},
+				{
+					"name": "6. Vehicle Exit",
+					"request": { "method": "POST", "header": [], "url": "{{gatewayUrl}}/api/vehicles/{{vehicleId}}/exit" }
+				},
+				{
+					"name": "7. Pay for Session",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"vehicleId\": {{vehicleId}},\n  \"parkingSpaceId\": {{spaceId}},\n  \"amount\": 350.00,\n  \"cardNumber\": \"4111111111111111\",\n  \"expiryMonth\": 12,\n  \"expiryYear\": 2027,\n  \"cvv\": \"123\"\n}"
+						},
+						"url": "{{gatewayUrl}}/api/payments"
+					}
+				},
+				{
+					"name": "8. Confirm Space Released",
+					"request": { "method": "GET", "header": [], "url": "{{gatewayUrl}}/api/spaces/{{spaceId}}" }
+				},
+				{
+					"name": "9. Get Receipt",
+					"request": { "method": "GET", "header": [], "url": "{{gatewayUrl}}/api/payments/{{paymentId}}/receipt" }
+				},
+				{
+					"name": "10. Check Notifications",
+					"request": { "method": "GET", "header": [], "url": "{{gatewayUrl}}/api/notifications/user/{{userId}}" }
+				},
+				{
+					"name": "11. Check Analytics",
+					"request": { "method": "GET", "header": [], "url": "{{gatewayUrl}}/api/analytics/usage" }
+				}
+			]
+		}
+	]
+}
